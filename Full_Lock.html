@@ -1,0 +1,161 @@
+
+Get_Access = 'AC_check = getContentDescriptionByIdAndIndex("", Access);if(AC_check !=  "ข้าม"){clickByIdAndIndex("", Access);}  else if(AC_check ==  "ข้าม"){Access_1 = Access + 1; clickByIdAndIndex("", Access_1);}';
+sorry = getBounds("*ขออภัย*");
+        kilo_max = global_kilo_max;
+        kilo_min = global_kilo_min;
+       price_max = global_price_max;
+       price_min = global_price_min;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+   PHANToM_Delay = global_PHANToM_Delay;
+  
+        shop_ban = ".*{global_shop_ban}.*";
+   shop_ban_list = replaceAll(shop_ban,',','.*|.*');
+          Origin = ".*{global_Origin}.*";
+     Origin_List = replaceAll(Origin,',','.*|.*');
+     Destination = ".*{global_Destination}.*";
+Destination_List = replaceAll(Destination,',','.*|.*');
+
+
+
+Dialog = 10;
+
+
+while(Dialog <= 25){
+PHANToM_Trigger = 0;
+Online = getBounds("ออนไลน์");
+ 
+          
+
+
+Access = Dialog + 1;
+Online = getBounds("ออนไลน์");
+ sorry = getBounds("*ขออภัย*");
+
+if(global_PHANToM_XI != 1){Notification = null}
+else if(global_PHANToM_XI == 1)
+{bounds_Dialog = getContentDescriptionByIdAndIndex("", Dialog);
+AC_check = getContentDescriptionByIdAndIndex("", Access);
+ if(bounds_Dialog == "" and Online    != null){Notification = "กำลังทำงาน"}
+ else if(bounds_Dialog != ""   and Online    != null and bounds_Dialog != '' and bounds_Dialog != null )
+{ban_detect_Dialog = findAll(bounds_Dialog,'.*\nอยู่ห่าง');
+ ban_detect_Dialogst = replaceAll(ban_detect_Dialog,'\nอยู่ห่าง]','');
+ ban_detect_Dialognd =replace(ban_detect_Dialogst, '[', '');
+ ban_matches_Dialog = matches(ban_detect_Dialognd,shop_ban_list);
+ kilo_Dialog = findAll(bounds_Dialog, '.*[0-9].[0-9][[0-9][ ]].*');
+ price_Dialog = findAll(bounds_Dialog, '.*กม.\n.*\n.*\n.*\n');
+ kilo_Dialog_r1=replace(kilo_Dialog, '[', '');
+ kilo_Dialog_r2=replace(kilo_Dialog_r1, ']', '');
+ kilo_Dialog_fr = kilo_Dialog_r2 ;
+ price_Dialog_r1=replaceAll(price_Dialog,'.*กม.\n.*\n.*\n','');
+ price_Dialog_r2=replaceAll(price_Dialog_r1,']','');
+ price_Dialog_fr = price_Dialog_r2 ;
+ Origin_detect_Dialog = findAll(bounds_Dialog,'กม.\n.*');
+ Origin_detect_Dialogst = replace(Origin_detect_Dialog, '[กม.\n', '');
+ Origin_detect_Dialognd = replaceAll(Origin_detect_Dialogst,']','');
+ Destination_detect_Dialog = findAll(bounds_Dialog,'กม.\n.*\n.*');
+ Destination_detect_Dialogst =replaceAll(Destination_detect_Dialog,']','');
+ Destination_detect_Dialognd = replaceAll(Destination_detect_Dialogst, 'กม.\n.*\n', '');
+ Destination_detect_Dialogth = replace(Destination_detect_Dialognd, '[', '');
+ ban_matches_Dialog = matches(ban_detect_Dialognd,shop_ban_list);
+ Origin_matches_Dialog = matches(Origin_detect_Dialognd,Origin_List);
+ Destination_matches_Dialog = matches(Destination_detect_Dialognd,Destination_List);
+
+if (global_ban == 1)
+{if(ban_matches_Dialog == true){CheckpointDialog = 1; notifyDialog ="แบนร้าน"}
+else if(ban_matches_Dialog == false)
+{if(price_max == null or price_min == null)
+{notifyDialog = "โปรดกำหนด'ราคา'"}
+else if(price_max < price_min)
+{notifyDialog = "'ราคา'ผิดพลาด"}
+else if(price_max >= price_min)
+{if(price_Dialog_fr > price_max)
+{CheckpointDialog = 1; notifyDialog = "'ราคา'เกินกว่ากำหนด"}
+else if(price_Dialog_fr < price_min)
+{CheckpointDialog = 1; notifyDialog = "'ราคา'ต่ำกว่ากำหนด"} 
+else if(price_Dialog_fr <= price_max and 
+price_Dialog_fr >= price_min)
+{if(kilo_max == null or 
+kilo_min == null){notifyDialog = "โปรดตั้งเงื่อนไขกิโล"}
+else if(kilo_max < kilo_min){notifyDialog = "'ระยะกิโล'ผิดพลาด"}
+else if(kilo_max >= kilo_min)
+{if(kilo_Dialog_fr > kilo_max)
+{CheckpointDialog = 1; notifyDialog = "'ระยะกิโล'เกินกว่ากำหนด"}
+              else if(kilo_Dialog_fr < kilo_min)
+                     {CheckpointDialog = 1; notifyDialog = "'ระยะกิโล'ต่ำกว่ากำหนด"} 
+              else if(kilo_Dialog_fr <= kilo_max and
+                      kilo_Dialog_fr >= kilo_min)
+{if(global_OriginLock != 1 and global_DestinateLock != 1)
+{eval(Get_Access);
+PHANToM_Trigger = 1;}
+
+else if(global_OriginLock == 1 and global_DestinateLock != 1)
+{if(Origin_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ต้นทาง'ไม่ตรงเงื่อนไข"}
+ else if(Origin_matches_Dialog == true)
+{eval(Get_Access);
+PHANToM_Trigger = 1;}}
+
+else if(global_OriginLock != 1 and global_DestinateLock == 1)
+ {if(Destination_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ปลายทาง'ไม่ตรงเงื่อนไข"}
+  else if(Destination_matches_Dialog == true)
+{eval(Get_Access);PHANToM_Trigger = 1;}}
+
+else if(global_OriginLock == 1 and global_DestinateLock == 1)
+{if(Origin_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ต้นทาง'ไม่ตรงเงื่อนไข"}
+ else if(Origin_matches_Dialog == true){if(Destination_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ปลายทาง'ไม่ตรงเงื่อนไข"}
+  else if(Destination_matches_Dialog == true)
+ {eval(Get_Access);
+PHANToM_Trigger = 1;}}
+}}}}}}}
+else if(global_ban != 1){if(price_max == null or price_min == null)
+{Notification = "โปรดกำหนด'ราคา'"}
+else if(price_max < price_min)
+{Notification = "'ราคา'ผิดพลาด"}
+else if(price_max >= price_min)
+{if(price_Dialog_fr > price_max)
+{CheckpointDialog = 1; notifyDialog = "'ราคา'เกินกว่ากำหนด"}
+else if(price_Dialog_fr < price_min)
+{CheckpointDialog = 1; notifyDialog = "'ราคา'ต่ำกว่ากำหนด"} 
+else if(price_Dialog_fr <= price_max and 
+price_Dialog_fr >= price_min)
+{if(kilo_max == null or 
+kilo_min == null){notifyDialog = "โปรดตั้งเงื่อนไขกิโล"}
+else if(kilo_max < kilo_min){notifyDialog = "'ระยะกิโล'ผิดพลาด"}
+else if(kilo_max >= kilo_min)
+{if(kilo_Dialog_fr > kilo_max)
+{CheckpointDialog = 1; notifyDialog = "'ระยะกิโล'เกินกว่ากำหนด"}
+              else if(kilo_Dialog_fr < kilo_min)
+                     {CheckpointDialog = 1; notifyDialog = "'ระยะกิโล'ต่ำกว่ากำหนด"} 
+              else if(kilo_Dialog_fr <= kilo_max and
+                      kilo_Dialog_fr >= kilo_min)
+{if(global_OriginLock != 1 and global_DestinateLock != 1)
+{eval(Get_Access);
+PHANToM_Trigger = 1;}
+
+else if(global_OriginLock == 1 and global_DestinateLock != 1)
+{if(Origin_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ต้นทาง'ไม่ตรงเงื่อนไข"}
+ else if(Origin_matches_Dialog == true)
+{eval(Get_Access);
+PHANToM_Trigger = 1;}}
+
+else if(global_OriginLock != 1 and global_DestinateLock == 1)
+ {if(Destination_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ปลายทาง'ไม่ตรงเงื่อนไข"}
+  else if(Destination_matches_Dialog == true)
+{eval(Get_Access);
+PHANToM_Trigger = 1;}}
+
+else if(global_OriginLock == 1 and global_DestinateLock == 1)
+{if(Origin_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ต้นทาง'ไม่ตรงเงื่อนไข"}
+ else if(Origin_matches_Dialog == true){if(Destination_matches_Dialog == false){CheckpointDialog = 1; notifyDialog ="'ปลายทาง'ไม่ตรงเงื่อนไข"}
+  else if(Destination_matches_Dialog == true)
+ {eval(Get_Access);
+PHANToM_Trigger = 1;}}
+}}}}}}}}
+sorry = getBounds("*ขออภัย*");
+if(sorry != null){sleep(300);click("กลับสู่หน้ารับงาน");
+sleep(300);click("ตกลง");}
+if(PHANToM_Trigger == 1){Dialog = 99;
+sleep(PHANToM_Delay);
+}
+else if(PHANToM_Trigger != 1){Dialog = Dialog + 1;PHANToM_Trigger = 0}
+}
+                
