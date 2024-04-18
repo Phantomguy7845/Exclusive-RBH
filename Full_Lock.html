@@ -1,5 +1,5 @@
 if(global_PHANToM == true){
-Get_Access = 'AC_check = getContentDescriptionByIdAndIndex("", Access);if(AC_check !=  "ข้าม"){clickByIdAndIndex("", Access);}  else if(AC_check ==  "ข้าม"){Access_1 = Access + 2; clickByIdAndIndex("", Access_1);}';
+Get_Access = 'Access_1 = Access + 2;AC_check = getContentDescriptionByIdAndIndex("", Access_1);if(AC_check !=  "ข้าม"){clickByIdAndIndex("", Access);}  else if(AC_check ==  "ข้าม"){Access_1 = Access + 2; clickByIdAndIndex("", Access_1);}';
 sorry = getBounds("*ขออภัย*");
         kilo_max = global_kilo_max;
         kilo_min = global_kilo_min;
@@ -28,13 +28,14 @@ Online = getBounds("ออนไลน์");
 
 
 Access = Dialog + 1;
+        Access_1 = Access + 2;
 Online = getBounds("ออนไลน์");
  sorry = getBounds("*ขออภัย*");
 
 if(global_PHANToM_XI != 1){Notification = null}
 else if(global_PHANToM_XI == 1)
 {bounds_Dialog = getContentDescriptionByIdAndIndex("", Dialog);
-AC_check = getContentDescriptionByIdAndIndex("", Access);
+AC_check = getContentDescriptionByIdAndIndex("", Access_1);
  if(bounds_Dialog == "" and Online    != null){Notification = "กำลังทำงาน"}
  else if(bounds_Dialog != ""   and Online    != null and bounds_Dialog != '' and bounds_Dialog != null )
 {ban_detect_Dialog = findAll(bounds_Dialog,'.*\nอยู่ห่าง');
