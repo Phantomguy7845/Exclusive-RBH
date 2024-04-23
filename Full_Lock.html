@@ -1,5 +1,5 @@
 if(global_PHANToM == true){
-Get_Access = 'Access_2 = Access + 1;AC_check = getContentDescriptionByIdAndIndex("", Access_2);if(AC_check !=  "ข้าม"){clickByIdAndIndex("", Access);}  else if(AC_check ==  "ข้าม"){Access_1 = Access + 2; clickByIdAndIndex("", Access_1);}';
+Get_Access = 'Skip = getBounds("*ข้าม*"); if(Skip == null){ clickByIdAndIndex("", Access)}else if(Skip != null){click("*รับงาน*")}';
 sorry = getBounds("*ขออภัย*");
         kilo_max = global_kilo_max;
         kilo_min = global_kilo_min;
