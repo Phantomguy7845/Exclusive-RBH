@@ -1,5 +1,5 @@
 if(global_PHANToM == true){
-Get_Access = 'click("*รับงาน*")';
+Get_Access = 'clickByIdAndIndex("", Access)';
 sorry = getBounds("*ขออภัย*");
         kilo_max = global_kilo_max;
         kilo_min = global_kilo_min;
@@ -27,7 +27,7 @@ Online = getBounds("ออนไลน์");
           
 
 
-Access = Dialog + 1;
+Access = Dialog + 2;
         Access_1 = Access + 2;
         Access_2 = Access + 1;
 Online = getBounds("ออนไลน์");
